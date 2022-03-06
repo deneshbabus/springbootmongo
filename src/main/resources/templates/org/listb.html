@@ -1,0 +1,57 @@
+<link rel="stylesheet" type="text/css" th:href="@{/resources/css/smoothness/jquery-ui-1.8.4.custom.css}" />
+<link rel="stylesheet" type="text/css" th:href="@{/resources/css/jquery.datatable.css}" />
+<script th:src="@{/resources/js/jquery.dataTables.js}"></script>
+<script th:src="@{/resources/js/functions.js}"></script>
+
+
+<div xmlns:th="http://www.thymeleaf.org">
+	<div id="centerDiv" style="margin-left:5px;">
+		<div class="breadCrumb"><a th:href="@{/admin/}">Home</a> <span> > Organization Management > List Organizations</span></div>
+
+		<div class="serviceOuter">
+			<div id="leftmain">
+				<div style="clear:both; display: block;">
+					<div id="showcreate" class="heading" style="width:49%;display:inline-block;">List Organizations</div>			           
+					<div style="width:50%;display:inline-block;text-align:right" ><a th:href="@{'/admin/orgs?form'}" class="greenbutton-medium2">Add Organization</a></div>
+				</div>							 
+				<div style="width: 773px; height: auto;clear:both" id="leftmiddle">
+					<table border="0" width="100%" cellpadding="0" cellspacing="0" class="orgList">
+					<thead>
+					<tr class="tableHeader">
+						<td class="padleft15">Name</td>						
+						<td align="center">Created Date</td>
+						<td align="center">Action</td>
+					</tr>
+					</thead>
+					<tbody>
+					<tr class="greyRow" th:each="org : ${organizations}" th:object="${org}">
+						<td class="padleft15" th:text="*{customerName}">name</td>
+						
+						
+						<td align="center" th:text="${org.createdDate} != null ? ${#dates.format(org.createdDate, 'dd-MM-yyyy HH:mm')} : ${org.createdDate}">createdDate</td>
+						<td class="padleft15" th:text="*{status}">name</td>
+						<td align="center" nowrap="nowrap">
+							<!-- <a th:href="@{'/admin/orgs/'+*{id}}" title="View"></a>&nbsp;&nbsp;<a th:href="@{'/admin/orgs/'+*{id}+'?form'}"  title="Edit"></a>&nbsp;&nbsp;<a th:href="@{'/admin/orgs/'+*{id}+'?d'}"  title="Delete"></a> -->
+						</td>
+					</tr>
+					<tr class="greyRow" th:if="${organizations}?(${#lists.size(organizations) == 0}):true">
+						<td colspan="6" style="text-align:center;font-size:13px;border-bottom:1px solid #CCCCCC;"><b>No organization available.</b></td>
+					</tr>
+					</tbody>
+					</table>
+			
+					
+				</div>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript">
+		//<![CDATA[
+		var toolbar ={ "bPaginate": false,
+			"bFilter": false,
+			"bInfo": false	
+		};
+		buildDataTable(".orgList",10,'',toolbar);
+		//]]>
+	</script>
+</div>

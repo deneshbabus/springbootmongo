@@ -1,0 +1,75 @@
+<div xmlns:th="http://www.thymeleaf.org">
+<script th:src="@{/resources/js/form2js.js}"></script>
+<style type="text/css">
+.orgCreatePanel { width:450px }
+</style>
+<div>
+	<div class="breadCrumb">
+	<a th:href="@{/admin/orgs/}">Home</a> <span> > Create customer</span>
+	</div>
+    <div class="serviceOuter">
+        <div id="leftmain" class="serviceLeftMain">
+            <div style="display: block; width: auto;" class="panel"><div style="width: 745px; height: auto;" title="" id="lefttop" class="easyui-panel serviceLeft panel-body panel-body-noheader panel-body-noborder" border="false"></div></div>
+            <div style="display: block; width: auto;" class="panel"><div style="width: 745px; height: auto;" title="" id="leftmiddle" class="easyui-panel serviceLeft panel-body panel-body-noheader panel-body-noborder" border="false">
+			<div id="showcreate" class="createMemberContainer" style="margin-bottom: 5px;">Create customer </div>
+			<div id="showupdate" class="createMemberContainer" style="display:none;margin-bottom:5px">Update customer
+			</div>
+			<div style="margin-top:10px;">
+			<form id="memberCrtFrm" method="post" th:action="@{'/admin/orgs'}"  th:object="${customer}">
+				<input type="hidden" name="jsonContent" id="jsonContent" />
+				<div class="fieldTopContainer1">
+					<div class="orgCreatePanel even">
+						<div class="memberLabel">Enter the customer Name<font color="#FF0000"> *</font></div>
+						<div class="memberControl">
+							<input name="customerName" id="customerName" maxlength="64" type="text" class="textbox-small" th:value="${customer.customerName}"/>&nbsp;
+							 
+							<div class="errorMsg" th:if="${#fields.hasErrors('customerName')}" th:with="err=${#fields.errors('customerName')}" th:text="${#strings.arrayJoin(err,', ')}">					
+							</div>
+							
+						
+						</div>
+					</div>
+					<div class="orgCreatePanel even">
+						<div class="memberLabel"></div>
+						<div class="memberControl">
+					   		<input id="btnSubmit" name="submit" value="Submit" type="submit" onClick="return validateFrm()"/>
+					   		<input id="btnCancel" name="Cancel" value="Cancel" type="button" onclick="goList()"/>
+					    </div>
+					</div>
+				</div>
+			</form>
+			</div>
+		</div>
+	</div>
+</div>
+</div>
+</div>
+<script type="text/javascript" th:inline="javascript">
+
+
+
+function generateForm(){
+	var jsonContent = JSON.stringify(form2js(document.getElementById('memberCrtFrm')), null, '\t');
+	console.log("json content:"+jsonContent);
+	
+	
+	var jsonContent = JSON.stringify(form2js(document.getElementById('jsonDataDiv')));	
+	
+	//return false;
+	if(jsonContent!='') {
+		$('#jsonContent').val(jsonContent);
+		//$("#orgCreateMainForm").submit();
+		return true;
+	} else {
+		return false;
+	}
+}
+
+function goList() {
+	
+	window.location=[[@{/admin/orgs/}]];
+	
+	
+}
+</script>
+</div>
